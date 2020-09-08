@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" />
+   <link rel="stylesheet" href="js/bootstrap.css">
+   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="style.css">
+   <script src="js/jquery-3.5.1.js"></script>
+</head>
+<body>
+               <div class="container">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <button class="btn btn-default js-go-day">DAY MODE</button>
+                        <button class="btn btn-default js-go-night">NIGHT MODE</button>
+                     </div>
+                  </div>
+               </div>
+
+       <div class="main">
+            <div class="music_container">
+                <h2 id="title">PERFECT</h2>
+                <h3 id="artist">ONE DIRECTION</h3>
+                <div class="img-container">
+                   <img src="images/images.jpg" alt="album" >
+                </div>
+                 <audio src="Music/Perfect.mp3" ></audio>
+                   <div class="music-controls">
+                      <i class="fas fa-backward" id="prev" title="Previous"></i>
+                      <i class="fas fa-play main-button" id="play" title="Play"></i>
+                      <i class="fas fa-forward" id="next" title="Next"></i>
+                 
+                    </div>
+            </div>
+        </div>
+       <script>
+              const music = document.querySelector("audio");
+              const img   = document.querySelector("img");
+              const play  = document.getElementById("play");
+              const title  = document.getElementById("title");
+              const artist  = document.getElementById("artist");
+              const prev  = document.getElementById("prev");
+              const next  = document.getElementById("next");
+
+               const songs = [
+                  {  name: "Track-1",
+                     title: "Perfect",
+                     artist: "One Direction",
+               },
+               {  name: "Track-2",
+                     title: "Best Song Ever",
+                     artist: "One Direction",
+               },
+               {  name: "Track-3",
+                     title: "What Makes You Beautiful",
+                     artist: "One Direction",
+               }]
+                let isPlaying=false;
+
+           // PLAY
+           const playMusic = () => {
+                 isPlaying=true;
+                 music.play();
+                 play.classList.replace("fa-play", "fa-pause");
+                 img.classList.add("anime");
+              }
+
+            // PAUSE
+           const pauseMusic = ()=>{
+                 isPlaying=false;
+                 music.pause();
+                 play.classList.replace("fa-pause", "fa-play");
+                 img.classList.remove("anime");
+              }
+
+// Checking condition if it is playing or not
+              play.addEventListener("click", ()=>{
+                 if(isPlaying){
+                    pauseMusic();
+                 }else{
+                    playMusic();
+                 }
+              });
+               const loadSong = (songs) => {
+                  title.textContent = songs.title;
+                  artist.textContent = songs.artist;
+                  music.src = "Music/"+songs.name+".mp3";
+                  img.src = "images/"+songs.name+".jpg";
+               }
+            //   loadSong(songs[1]);
+
+              index = 0;
+              const nextSong = ()=>{
+                   index = (index + 1) % songs.length;
+                  loadSong(songs[index]);
+                 playMusic();
+              }
+
+              const prevSong = ()=>{
+                  index--;
+                  if(index<0){
+                     index=2;
+                  }
+                  loadSong(songs[index]);
+                  playMusic();
+              }
+
+              next.addEventListener("click", nextSong);
+              prev.addEventListener("click", prevSong);
+
+              $('.js-go-night').click(function(){
+			alert('Go to night mode ');
+			$('.main').addClass('night');
+
+
+		});
+		$('.js-go-day').click(function(){
+			alert('Go to day mode ');
+			$('.main').removeClass('night');
+
+		});
+       </script>
+</body>
+</html>d
